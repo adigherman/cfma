@@ -97,8 +97,7 @@ jobs:
           path: check
           
       - name: Before Deploy
-        run: |
-          Rscript -e "tic::before_deploy()"
+        run: Rscript -e "tic::before_deploy()"
           
       - name: Deploy
         run: Rscript -e "tic::deploy()"
