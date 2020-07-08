@@ -70,9 +70,6 @@ jobs:
 #          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
 #          sudo -s eval "$sysreqs"
 
-      - name: Before Install
-        run: Rscript -e "tic::before_install()"
-
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
@@ -92,6 +89,9 @@ jobs:
           cmake --version
           curl --version
         shell: bash
+
+      - name: Before Check
+        run: Rscript -e "tic::before_install()"
 
       - name: "Check"
         run: | 
