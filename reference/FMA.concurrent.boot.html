@@ -112,10 +112,10 @@
     <p>This function performs functional mediation regression under the concurrent model with given tuning parameter. Point-wise confidence bands are obtained from bootstrap.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>FMA.concurrent.boot</span>(<span class='kw'>Z</span>, <span class='kw'>M</span>, <span class='kw'>Y</span>, intercept = <span class='fl'>TRUE</span>, basis = <span class='kw'>NULL</span>, Ld2.basis = <span class='kw'>NULL</span>, 
-    basis.type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fourier"</span>), nbasis = <span class='fl'>3</span>, timeinv = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>), timegrids = <span class='kw'>NULL</span>, 
-    lambda.m = <span class='fl'>0.01</span>, lambda.y = <span class='fl'>0.01</span>, sims = <span class='fl'>1000</span>, boot = <span class='fl'>TRUE</span>, 
-    boot.ci.type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bca"</span>, <span class='st'>"perc"</span>), conf.level = <span class='fl'>0.95</span>, verbose = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>FMA.concurrent.boot</span>(<span class='no'>Z</span>, <span class='no'>M</span>, <span class='no'>Y</span>, <span class='kw'>intercept</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>basis</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Ld2.basis</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <span class='kw'>basis.type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"fourier"</span>), <span class='kw'>nbasis</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>timeinv</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>), <span class='kw'>timegrids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <span class='kw'>lambda.m</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>lambda.y</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>sims</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>boot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <span class='kw'>boot.ci.type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"bca"</span>, <span class='st'>"perc"</span>), <span class='kw'>conf.level</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,25 +208,19 @@
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Zhao et al. (2017). <em>Functional Mediation Analysis with an Application to Functional Magnetic Resonance Imaging Data.</em> arXiv preprint arXiv:1805.06923.</p>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
-
-    <p>Yi Zhao, Johns Hopkins University, <a href='mailto:zhaoyi1026@gmail.com'>zhaoyi1026@gmail.com</a>;</p>
-<p>Xi Luo, Brown University <a href='mailto:xi.rossi.luo@gmail.com'>xi.rossi.luo@gmail.com</a>;</p>
-<p>Martin Lindquist, Johns Hopkins University, <a href='mailto:mal2053@gmail.com'>mal2053@gmail.com</a>;</p>
-<p>Brian Caffo, Johns Hopkins University, <a href='mailto:bcaffo@gmail.com'>bcaffo@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>##################################################</span>
 <span class='co'># Concurrent functional mediation model</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>env.concurrent</span>)
-<span class='kw'>Z</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"Z"</span>,<span class='kw'>env.concurrent</span>)
-<span class='kw'>M</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"M"</span>,<span class='kw'>env.concurrent</span>)
-<span class='kw'>Y</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"Y"</span>,<span class='kw'>env.concurrent</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>env.concurrent</span>)
+<span class='no'>Z</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"Z"</span>,<span class='no'>env.concurrent</span>)
+<span class='no'>M</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"M"</span>,<span class='no'>env.concurrent</span>)
+<span class='no'>Y</span><span class='kw'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/get.html'>get</a></span>(<span class='st'>"Y"</span>,<span class='no'>env.concurrent</span>)
 
 <span class='co'># \donttest{</span>
 <span class='co'># consider Fourier basis</span>
-<span class='kw'>fit.boot</span><span class='op'>&lt;-</span><span class='fu'>FMA.concurrent.boot</span>(<span class='kw'>Z</span>,<span class='kw'>M</span>,<span class='kw'>Y</span>,intercept=<span class='fl'>FALSE</span>,timeinv=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>300</span>))</div><div class='output co'>#&gt; [1] "Bootstrap sample 1"
+<span class='no'>fit.boot</span><span class='kw'>&lt;-</span><span class='fu'>FMA.concurrent.boot</span>(<span class='no'>Z</span>,<span class='no'>M</span>,<span class='no'>Y</span>,<span class='kw'>intercept</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>timeinv</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>300</span>))</div><div class='output co'>#&gt; [1] "Bootstrap sample 1"
 #&gt; [1] "Bootstrap sample 2"
 #&gt; [1] "Bootstrap sample 3"
 #&gt; [1] "Bootstrap sample 4"
@@ -1225,8 +1219,9 @@
 #&gt; [1] "Bootstrap sample 997"
 #&gt; [1] "Bootstrap sample 998"
 #&gt; [1] "Bootstrap sample 999"
-#&gt; [1] "Bootstrap sample 1000"</div><div class='input'><span class='co'># }</span>
-<span class='co'>##################################################</span></div></pre>
+#&gt; [1] "Bootstrap sample 1000"</div><div class='input'># }
+##################################################
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -1242,7 +1237,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
