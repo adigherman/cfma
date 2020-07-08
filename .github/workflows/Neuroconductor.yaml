@@ -50,6 +50,7 @@ jobs:
         id: get_version
         run: |
           echo ::set-output name=REPO_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+          echo ::set-output name=PKG_VER::$(Rscript -e 'cat(read.dcf("DESCRIPTION")[, "Version"])')
         shell: bash
       
       - name: Query dependencies
@@ -99,8 +100,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${PKG_VERSION}
-          release_name: Release v$PKG_VERSION
+          tag_name: ${{ steps.get_version.outputs.PKG_VER }}
+          release_name: Release v$${{ steps.get_version.outputs.PKG_VER }}
           draft: false
           prerelease: false
 
@@ -131,8 +132,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/${{ steps.get_version.outputs.REPO_NAME }}_$PKG_VERSION-${{ runner.os }}-R${{ matrix.config.r_ver }}.tar.gz
-          asset_name: ${{ steps.get_version.outputs.REPO_NAME }}_$PKG_VERSION-${{ runner.os }}-R${{ matrix.config.r_ver }}.tar.gz
+          asset_path: ${{ github.workspace }}/${{ steps.get_version.outputs.REPO_NAME }}_${{ steps.get_version.outputs.PKG_VER }}-${{ runner.os }}-R${{ matrix.config.r_ver }}.tar.gz
+          asset_name: ${{ steps.get_version.outputs.REPO_NAME }}_${{ steps.get_version.outputs.PKG_VER }}-${{ runner.os }}-R${{ matrix.config.r_ver }}.tar.gz
           asset_content_type: application/octet-stream
 #cfma_1.0.1.tar.gz
 #ANTsR_0.5.6.2_R_x86_64-pc-linux-gnu_R3.5.tar.gz
