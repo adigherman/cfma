@@ -46,12 +46,22 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
       
-      - uses: chrnorm/deployment-action@releases/v1
-        name: Create GitHub deployment
-        id: deployment
+      - run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+        shell: bash
+
+      - run: echo "$REPOSITORY_NAME"
+        shell: bash
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: "${{ github.token }}"
-          environment: production
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
 
       - name: Query dependencies
         run: |
@@ -122,6 +132,18 @@ jobs:
       - name: Before Deploy
         run: Rscript -e "tic::before_deploy()"
           
+      - name: Upload Release Asset (linux-x64)
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/${REPOSITORY_NAME}_${{ github.ref }}-${{ runner.os }}-R${{ matrix.config.r }}.tar.gz
+          asset_name: ${REPOSITORY_NAME}_${{ github.ref }}-${{ runner.os }}-R${{ matrix.config.r }}.tar.gz
+          asset_content_type: application/octet-stream
+#github.ref
+#ANTsR_0.5.6.2_R_x86_64-pc-linux-gnu_R3.5.tar.gz
+
       - name: Deploy
         run: Rscript -e "tic::deploy()"
 
