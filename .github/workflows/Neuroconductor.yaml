@@ -93,11 +93,11 @@ jobs:
           curl --version
         shell: bash
 
-#      - name: "Check"
-#        run: | 
-#          Rscript -e 'tic::script()'
-#          ls -l
-#        shell: bash
+      - name: "Check"
+        run: | 
+          Rscript -e 'tic::script()'
+          ls -l
+        shell: bash
         
       - name: Show testthat output
         if: always()
