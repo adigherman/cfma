@@ -18,9 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release'}
+          - {os: macOS-latest,   r: 'release', latex: "true"}
           - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-16.04,   r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: ubuntu-16.04,   r: 'release', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
@@ -33,6 +33,9 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
+        
+      - uses: r-lib/actions/setup-tinytex@master
+        if: matrix.config.latex == 'true'
 
       - uses: r-lib/actions/setup-pandoc@master
       
@@ -80,6 +83,10 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
+        
+      - name: Check cmake version
+        run: cmake --version
+        shell: bash
 
       - name: "Check"
         run: Rscript -e 'tic::script()'
