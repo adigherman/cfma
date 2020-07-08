@@ -46,7 +46,11 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
       
-      - run: echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
+      - name: Get the repo name and version
+        id: get_version
+        run: |
+          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+          echo ::set-output name=REPO_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | sed -e "s/:refs//")
         shell: bash
 
       - run: echo "$REPOSITORY_NAME"
@@ -58,8 +62,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ steps.get_version.outputs.VERSION }}
+          release_name: Release v${{ steps.get_version.outputs.VERSION }}
           draft: false
           prerelease: false
 
@@ -138,8 +142,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/${REPOSITORY_NAME}_${{ github.ref }}-${{ runner.os }}-R${{ matrix.config.r }}.tar.gz
-          asset_name: ${REPOSITORY_NAME}_${{ github.ref }}-${{ runner.os }}-R${{ matrix.config.r }}.tar.gz
+          asset_path: ${{ github.workspace }}/${{ steps.get_version.outputs.REPO_NAME }}_${{ steps.get_version.outputs.VERSION }}-${{ runner.os }}-R${{ matrix.config.r }}.tar.gz
+          asset_name: ${{ steps.get_version.outputs.REPO_NAME }}_${{ steps.get_version.outputs.VERSION }}-${{ runner.os }}-R${{ matrix.config.r }}.tar.gz
           asset_content_type: application/octet-stream
 #github.ref
 #ANTsR_0.5.6.2_R_x86_64-pc-linux-gnu_R3.5.tar.gz
