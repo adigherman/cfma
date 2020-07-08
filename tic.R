@@ -1,5 +1,5 @@
 # installs dependencies, runs R CMD check, runs covr::codecov()
-do_package_checks(error_on = TRUE, args="--as-cran", build_args="--no-manual")
+do_package_checks(args="--as-cran", build_args="--no-manual binary=TRUE")
 
 if (ci_on_ghactions() && ci_has_env("BUILD_PKGDOWN")) {
   # creates pkgdown site and pushes to gh-pages branch
