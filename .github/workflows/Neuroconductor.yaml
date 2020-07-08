@@ -36,6 +36,8 @@ jobs:
         
       - uses: r-lib/actions/setup-tinytex@master
         if: matrix.config.latex == 'true'
+        
+      - name: Install additional latex modules
         run: |
           tlmgr update --self
           tlmgr install filecontents inconsolata upquote courier courier-scaled helvetic infwarerr
