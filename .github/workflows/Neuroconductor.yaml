@@ -18,8 +18,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release', latex: "true"}
-          - {os: windows-latest, r: 'release'}
+#          - {os: macOS-latest,   r: 'release', latex: "true"}
+#          - {os: windows-latest, r: 'release'}
           - {os: ubuntu-16.04,   r: 'release', latex: "true", rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -38,12 +38,10 @@ jobs:
         if: matrix.config.latex == 'true'
         
       - name: Install additional latex modules
+        if: matrix.config.latex == 'true'
         run: |
           tlmgr update --self
-          tlmgr install filecontents inconsolata upquote courier courier-scaled helvetic infwarerr
-          tlmgr install biber biblatex
-          tlmgr install collection-luatex
-          tlmgr install iftex
+          tlmgr install filecontents upquote courier courier-scaled biber biblatex collection-luatex
           tlmgr update --all
 
       - uses: r-lib/actions/setup-pandoc@master
@@ -106,6 +104,7 @@ jobs:
         run: | 
           Rscript -e 'tic::script()'
           ls -l
+          ls -l ../
         shell: bash
         
       - name: Show testthat output
